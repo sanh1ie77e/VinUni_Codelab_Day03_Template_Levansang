@@ -5,9 +5,7 @@ from typing import List, Dict, Any
 RAW_DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "raw-data")
 
 def get_flight_info(origin: str, destination: str, max_price: int = 5000000) -> List[Dict[str, Any]]:
-    """
-    Search for flights matching origin, destination, and budget constraint.
-    """
+    """Search for flights matching origin, destination, and budget constraint."""
     flight_file = os.path.join(RAW_DATA_DIR, "flight_data.json")
     if not os.path.exists(flight_file):
         return []
@@ -15,6 +13,7 @@ def get_flight_info(origin: str, destination: str, max_price: int = 5000000) -> 
     with open(flight_file, "r", encoding="utf-8") as f:
         flights = json.load(f)
     
+    # Lọc chuyến bay theo điều kiện
     results = [
         fl for fl in flights
         if fl["origin"].upper() == origin.upper()
@@ -24,9 +23,7 @@ def get_flight_info(origin: str, destination: str, max_price: int = 5000000) -> 
     return results
 
 def get_weather_forecast(city_code: str) -> Dict[str, Any]:
-    """
-    Get weather forecast and outfit recommendation for a city code (e.g. SGN, HAN, DAD).
-    """
+    """Get weather forecast and outfit recommendation for a city code."""
     weather_file = os.path.join(RAW_DATA_DIR, "weather_data.json")
     if not os.path.exists(weather_file):
         return {"error": "Weather data not found"}
@@ -36,7 +33,7 @@ def get_weather_forecast(city_code: str) -> Dict[str, Any]:
     
     return weather_data.get(city_code.upper(), {"error": f"No data for {city_code}"})
 
-# Tool Registry for ReAct Agent
+# Milestone 2: Đăng Ký Tool Registry
 TOOL_DEFINITIONS = [
     {
         "name": "get_flight_info",
